@@ -21,24 +21,12 @@ public class SavingsAccountYear {
         return interestRate;
     }
 
-    public void deposit(double amount) {
-        startingBalance += amount;
-    }
-
-    public void withdraw(double amount) {
-        startingBalance -= amount;
-    }
-
-    public double balance() {
-        return startingBalance;
+    public double endingBalance() {
+        return startingBalance + (startingBalance * interestRate) / 100;
     }
 
     public SavingsAccountYear nextYear() {
         return new SavingsAccountYear(this.endingBalance(), interestRate);
-    }
-
-    public double endingBalance() {
-        return balance() + (balance() * interestRate) / 100;
     }
 
 }
