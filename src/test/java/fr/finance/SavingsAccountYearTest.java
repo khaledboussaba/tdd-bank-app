@@ -7,22 +7,22 @@ import static org.junit.Assert.assertEquals;
 public class SavingsAccountYearTest {
 
     @Test
-    public void startingBalance() {
+    public void startingBalanceMatchesConstructor() {
         assertEquals("", 10000, newAccount().startingBalance(), 0.0000);
     }
 
     @Test
-    public void interestRate() {
+    public void interestRateMatchesConstructor() {
         assertEquals("", 10, newAccount().interestRate(), 0.0000);
     }
 
     @Test
-    public void endingBalance() {
+    public void endingBalanceAppliesInterestRate() {
         assertEquals("", 11000, newAccount().endingBalance(), 0.0000);
     }
 
     @Test
-    public void nextYearsStartingBalanceShouldEqualsThisYearsEndingBalance() {
+    public void nextYearsStartingBalanceEqualsThisYearsEndingBalance() {
         SavingsAccountYear thisYear = newAccount();
         assertEquals("", thisYear.endingBalance(), thisYear.nextYear().startingBalance(), 0.0000);
     }
