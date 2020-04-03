@@ -1,6 +1,6 @@
 package fr.finance;
 
-public class SavingAccount {
+public class SavingsAccount {
 
     private double balance;
 
@@ -14,6 +14,12 @@ public class SavingAccount {
 
     public double balance() {
         return balance;
+    }
+
+    public SavingsAccount nextYear(double interestRate) {
+        SavingsAccount nextYear = new SavingsAccount();
+        nextYear.balance = balance() + (balance() * interestRate) / 100;
+        return nextYear;
     }
 
 }
