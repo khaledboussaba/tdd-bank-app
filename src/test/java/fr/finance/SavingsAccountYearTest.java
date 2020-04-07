@@ -78,30 +78,23 @@ public class SavingsAccountYearTest {
     }
 
     @Test
-    public void capitalGainsTaxIncurred() {
+    public void capitalGainsTaxIncurred_NeedsToCoverCapitalGainsWithdrawn_And_theAdditionalCapitalGainsWithdrawnToPayCapitalGainsTax() {
         SavingsAccountYear year = new SavingsAccountYear(10000, 3000, 10);
         year.withdraw(5000);
         assertEquals("", 2000, year.capitalGainsWithdrawn(), 0.0000);
-        assertEquals("", 500, year.capitalGainsTaxIncurred(25), 0.0000);
+        assertEquals("", 666, (int)year.capitalGainsTaxIncurred(25), 0.0);
     }
 
     @Test
     public void capitalGainsTaxIsIncludedInEndingBalance() {
         SavingsAccountYear year = new SavingsAccountYear(10000, 3000, 10);
-        year.withdraw(5000);
-        assertEquals("", 500, year.capitalGainsTaxIncurred(25), 0.0000);
-        assertEquals("", 10000 - 5000 - 500 + 450, year.endingBalance(25), 0.0000);
-
-        //TODO: Need to withdraw enough money to cover capital gains tax; that money will also be taxed
+        double amountWithdrawn = 5000;
+        year.withdraw(amountWithdrawn);
+        double expectedCapitalGainsTax = 666;
+        assertEquals("", expectedCapitalGainsTax, (int)year.capitalGainsTaxIncurred(25), 0.0000);
+        double expectedStartingBalanceAfterWithrawals = 10000 - expectedCapitalGainsTax - amountWithdrawn;
+        assertEquals("", (int)(expectedStartingBalanceAfterWithrawals * 1.10), (int)Math.round(year.endingBalance(25)), 0.0000);
     }
-//    @Test
-//    public void withdrawingMoreThanPrincipalIncursCapitalGainsTax() {
-//        SavingsAccountYear year = new SavingsAccountYear(10000, 3000, 10);
-//        year.withdraw(3000);
-//        assertEquals("", 7700, year.endingBalance(), 0.0000);
-//        year.withdraw(5000);
-//        assertEquals("", 2000 + 200 - (5000 * .25), year.endingBalance(), 0.0000);
-//    }
 
     private SavingsAccountYear newAccount() {
         SavingsAccountYear account = new SavingsAccountYear(10000, 10);
